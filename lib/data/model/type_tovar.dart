@@ -7,11 +7,11 @@ class type_tovar extends type_tovar_entity {
 
   Map<String, dynamic> toMap() {
     return {
-      'role': name,
+      'name': name,
     };
   }
 
   factory type_tovar.toFromMap(Map<String, dynamic> json) {
-    return type_tovar(name: json['type_tovar']);
+    return type_tovar(name: json['name']);
   }
 }
