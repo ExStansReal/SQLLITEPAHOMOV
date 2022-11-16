@@ -12,7 +12,7 @@ class tovar extends tovar_entity {
 
   Map<String, dynamic> toMap() {
     return {
-      'id_Type_tovar': id_Type_tovar.id,
+      'id_Type_tovar': id_Type_tovar,
       'name': name,
       'price_for_one_stuka': price_for_one_stuka,
     };
@@ -21,9 +21,7 @@ class tovar extends tovar_entity {
   factory tovar.toFromMap(Map<String, dynamic> json) {
     return tovar(
       id_tovar: (json['id_tovar'] as int),
-      id_Type_tovar: type_tovar_Enum.values.firstWhere(
-        (element) => element.id == (json['id_Type_tovar'] as int),
-      ),
+      id_Type_tovar: (json['id_type_tovar']),
       name: json['name'],
       price_for_one_stuka: json['price_for_one_stuka'],
     );

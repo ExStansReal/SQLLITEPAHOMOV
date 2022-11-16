@@ -11,6 +11,9 @@ import 'package:sqllitemaybe/data/model/user.dart';
 import 'package:sqllitemaybe/domain/enitity/role_entity.dart';
 import 'package:sqllitemaybe/domain/enitity/type_tovar_entity.dart';
 
+import 'package:sqflite_common/sqlite_api.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 class DataBaseHelper {
   static final DataBaseHelper instance = DataBaseHelper._instance();
 
@@ -31,7 +34,16 @@ class DataBaseHelper {
         _appDocumentDirectory.path, 'test.db'); //выборка пути и названия БД
 
     //провекра ОС
-    if (Platform.isWindows || Platform.isMacOS || Platform.isMacOS) {
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+      sqfliteFfiInit();
+      var databaseFactory = databaseFactoryFfi;
+      database = await databaseFactory.openDatabase(_pathDB,
+          options: OpenDatabaseOptions(
+              version: _version,
+              onCreate: (db, version) => onCreateTable(
+                    db,
+                  ),
+              onUpgrade: ((db, oldVersion, newVersion) => onUpdateTable(db))));
     } else {
       //инициализация для мобилок
       database = await openDatabase(_pathDB,
@@ -71,10 +83,6 @@ class DataBaseHelper {
     try {
       for (var element in RoleEnum.values) {
         db.insert(DataBaseRequest.tableRole, Role(name: element.name).toMap());
-      }
-      for (var element in type_tovar_Enum.values) {
-        db.insert(
-            DataBaseRequest.tableType_tovar, Role(name: element.name).toMap());
       }
     } on DatabaseException catch (error) {}
   }
