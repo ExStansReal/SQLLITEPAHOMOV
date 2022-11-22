@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sqllitemaybe/core/data_base_helper.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  DataBaseHelper.instance.init();
   runApp(const MyApp());
 }
 

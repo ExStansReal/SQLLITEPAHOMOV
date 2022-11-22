@@ -20,7 +20,7 @@ class DataBaseHelper {
   DataBaseHelper._instance();
 
   //версия
-  final int _version = 1;
+  final int _version = 2;
   //путь
   late final String _pathDB;
   //путь к БД
@@ -31,7 +31,7 @@ class DataBaseHelper {
     _appDocumentDirectory =
         await path_provider.getApplicationDocumentsDirectory();
     _pathDB = join(
-        _appDocumentDirectory.path, 'test.db'); //выборка пути и названия БД
+        _appDocumentDirectory.path, 'DataBase.db'); //выборка пути и названия БД
 
     //провекра ОС
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
@@ -51,7 +51,8 @@ class DataBaseHelper {
           onCreate: (db, version) => onCreateTable(
                 db,
               ),
-          onUpgrade: ((db, oldVersion, newVersion) => onUpdateTable(db)));
+          onUpgrade: ((db, oldVersion, newVersion) async =>
+              await onUpdateTable(db)));
     }
   }
 
@@ -59,6 +60,7 @@ class DataBaseHelper {
     for (var elemnt in DataBaseRequest.tableCreateList) {
       await db.execute(elemnt);
     }
+    onInitTable(db);
   }
 
   Future<void> onDropDataBase() async {

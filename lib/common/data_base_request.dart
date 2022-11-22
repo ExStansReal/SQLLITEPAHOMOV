@@ -48,7 +48,7 @@ abstract class DataBaseRequest {
       'CREATE TABLE "$tableRole" ("id" INTEGER,"role" TEXT NOT NULL UNIQUE, PRIMARY KEY("id" AUTOINCREMENT))';
 
   static const String _createTableType_tovar =
-      'CREATE TABLE "$tableType_tovar" ("id_type_tovar" INTEGER,"type_tovar" TEXT NOT NULL UNIQUE, PRIMARY KEY("id" AUTOINCREMENT))';
+      'CREATE TABLE "$tableType_tovar" ("id_type_tovar" INTEGER,"type_tovar" TEXT NOT NULL UNIQUE, PRIMARY KEY("id_type_tovar" AUTOINCREMENT))';
 
   static const String _createTableTovar =
       'CREATE TABLE "$table_tovar" ("id_tovar"	INTEGER,"name"	TEXT NOT NULL,"price_for_one_stuka"	INTEGER,"id_Type_tovar"	INTEGER,FOREIGN KEY("id_Type_tovar") REFERENCES "type_tovar"("id_type_tovar") ON DELETE CASCADE,PRIMARY KEY("id_type_tovar" AUTOINCREMENT) )';
@@ -60,14 +60,14 @@ abstract class DataBaseRequest {
       'CREATE TABLE "$tableUsers" ("id"	INTEGER,"login"	TEXT NOT NULL UNIQUE,"password"	TEXT NOT NULL,"id_role"	INTEGER,FOREIGN KEY("id_role") REFERENCES "Role"("id") ON DELETE CASCADE,PRIMARY KEY("id" AUTOINCREMENT) )';
 
   static const String _createTableYacheyka =
-      'CREATE TABLE "$tableYacheyka" ("id"	INTEGER,"abyom"	TEXT NOT NULL,"nomer"	TEXT NOT NULL,"idSklad"	INTEGER,FOREIGN KEY("idSklad") REFERENCES "sklad"("id_sklad") ON DELETE CASCADE,PRIMARY KEY("id_sklad" AUTOINCREMENT) )';
+      'CREATE TABLE "$tableYacheyka" ("id"	INTEGER,"abyom"	TEXT NOT NULL,"nomer"	TEXT NOT NULL,"idSklad"	INTEGER,FOREIGN KEY("idSklad") REFERENCES "sklad"("id_sklad") ON DELETE CASCADE,PRIMARY KEY("id" AUTOINCREMENT) )';
 
   static const String _createTableMesto_hreneniya =
-      'CREATE TABLE "$table_mesto_hreneniya" INTEGER,"id_mesto" INTEGER,"id_tovar"	INTEGER, "data_hreneniya"	TEXT NOT NULL, FOREIGN KEY("id_yacheyka") REFERENCES "yacheyka"("id") ON DELETE CASCADE,PRIMARY KEY("id" AUTOINCREMENT), FOREIGN KEY("id_tovar") REFERENCES "tovar"("id_tovar") ON DELETE CASCADE,PRIMARY KEY("id_tovar" AUTOINCREMENT))';
+      'CREATE TABLE "$table_mesto_hreneniya" ("id_mesto" INTEGER,"id_yacheyka" INTEGER,"id_tovar"	INTEGER, "data_hreneniya"	TEXT NOT NULL, FOREIGN KEY("id_yacheyka") REFERENCES "yacheyka"("id") ON DELETE CASCADE,FOREIGN KEY("id_tovar") REFERENCES "tovar"("id_tovar") ON DELETE CASCADE,PRIMARY KEY("id_mesto" AUTOINCREMENT))';
 
   static const String _createTableKorzina =
-      'CREATE TABLE "$table_korzina" INTEGER,"id_korzina" INTEGER,"id_user"	INTEGER,"id_mesto" INTEGER, "data_sozdaniy"	TEXT NOT NULL,"price" INTEGER, FOREIGN KEY("id_user") REFERENCES "user"("id") ON DELETE CASCADE,PRIMARY KEY("id" AUTOINCREMENT), FOREIGN KEY("id_mesto") REFERENCES "mesto_hreneniya"("id_mesto") ON DELETE CASCADE,PRIMARY KEY("id_mesto" AUTOINCREMENT))';
+      'CREATE TABLE "$table_korzina"  ("id_korzina" INTEGER,"id_user"	INTEGER,"id_mesto" INTEGER, "data_sozdaniy"	TEXT NOT NULL,"price" INTEGER, FOREIGN KEY("id_user") REFERENCES "user"("id") ON DELETE CASCADE,FOREIGN KEY("id_mesto") REFERENCES "mesto_hreneniya"("id_mesto") ON DELETE CASCADE,PRIMARY KEY("id_korzina" AUTOINCREMENT))';
 
   static const String _createTableZakaz =
-      'CREATE TABLE "$tableUsers" ("id_zakaz"	INTEGER,"id_korzina"	INTEGER,"data_otpravki"	TEXT NOT NULL,"adress" TEXT NOT NULL, "price_with_transport" INTEGER,FOREIGN KEY("id_korzina") REFERENCES "korzina"("id_korzina") ON DELETE CASCADE,PRIMARY KEY("id_korzina" AUTOINCREMENT) )';
+      'CREATE TABLE "$table_zakaz" ("id_zakaz"	INTEGER,"id_korzina"	INTEGER,"data_otpravki"	TEXT NOT NULL,"adress" TEXT NOT NULL, "price_with_transport" INTEGER,FOREIGN KEY("id_korzina") REFERENCES "korzina"("id_korzina") ON DELETE CASCADE,PRIMARY KEY("id_zakaz" AUTOINCREMENT) )';
 }
